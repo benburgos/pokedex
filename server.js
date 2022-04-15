@@ -15,8 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 //// INDUCES
 // Index Route
 app.get('/pokemon', (req, res) => {
-    res.send('You are at the index page!')
-    console.log('Index Route Success')
+    res.render('index.ejs', { allPokemon: Pokemon })
 });
 
 // New Route
