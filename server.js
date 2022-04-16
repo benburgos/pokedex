@@ -50,8 +50,7 @@ app.get('/pokemon/:id/edit', (req, res) => {
 
 // Show Route
 app.get('/pokemon/:id', (req, res) => {
-    res.send(`You've reached the page to view details on Pokemon # ${req.params.id}`)
-    console.log('Show Route success!')
+    res.render('show.ejs', { singlePokemon: Pokemon[req.params.id] })
 })
 
 // Listener

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Details</title>
+</head>
+<body>
+    <h1><%= singlePokemon.name %></h1>
+    <h2><%= singlePokemon.id %> </h2>
+
+    <img src="<%= singlePokemon.img %>" alt="Image of <%= singlePokemon.name %>">
+
+    <br>
+
+    <table>
+        <tr>Type:</tr>
+        <tr>
+            <% Object.values(singlePokemon.type).forEach(element => { %>
+            <td><button disabled="disabled"><%= element.toUpperCase() %></button></td>
+            <% }) %>
+        </tr>
+    </table>
+
+    <br>
+
+    <table>
+        <tr>Weaknesses</tr>
+        <tr>
+            <% for( let damage in singlePokemon.damages ) { %>
+
+                <% if (singlePokemon.damages[damage] === '2') { %>
+                    <td><button disabled="disabled"><%= damage.toUpperCase() %></button></td>  
+                <% } %>
+            <% } %>
+        </tr>
+    </table>
+
+    <br>
+
+    <table>
+        <tr>
+            <th>HP</th>
+            <th>Attack</th>
+            <th>Defense</th>
+        </tr>
+        <tr>
+            <td><%= singlePokemon.stats.hp  %> </td>
+            <td><%= singlePokemon.stats.attack %> </td>
+            <td><%= singlePokemon.stats.defense %> </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th>Abilities</th>
+        </tr>
+        <tr>
+            <% Object.values(singlePokemon.misc.abilities.normal).forEach(element => { %>
+                <td><button disabled="disabled"><%= element.toUpperCase() %></button></td>
+                <% }) %>
+        </tr>
+    </table>
+
+</body>
+</html>
