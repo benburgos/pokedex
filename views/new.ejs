@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>New Pokédex Entry</h1>
-    <form action="">
+    <form action="/pokemon" method="post">
         Enter Pokémon Name: <input type="text" name="name" value=""> <br>
         Enter Pokémon ID#: 
         <input type="number" name="id" value="<%= totalNumber + 1 %>" min="<%= totalNumber + 1 %>"> <br>
@@ -19,7 +19,7 @@
             <% function capitalize(str) { %>
                 <% return str.charAt(0).toUpperCase() + str.slice(1); %>
             <% } %> 
-            <%= capitalize(index) %><input type="checkbox" name="<%= index %>" value="2"><br>
+            <%= capitalize(index) %><input type="checkbox" name="type" value="<%= index %>"><br>
         <% } %>
         
         <br>
@@ -33,9 +33,30 @@
             <%= capitalize(index) %><input type="checkbox" name="<%= index %>" value="2"><br>
         <% } %>
 
+        <br>
+
+        <table>
+            <tr>
+                <th>HP</th>
+                <th>Attack</th>
+                <th>Defense</th>
+            </tr>
+            <tr>
+                <td><input type="text" name="hp"></td>
+                <td><input type="text" name="attack"></td>
+                <td><input type="text" name="defense"></td>
+            </tr>
+        </table>
+
+        <br>
+
         Abilities:
         <br>
-        <textarea name="normal" id="" cols="30" rows="10"></textarea>
+        <textarea name="abilities" id="" cols="30" rows="10"></textarea>
+        
+        <br>
+
+        <input type="submit" value="Create New Pokédex Entry">
     </form>
 
 </body>

@@ -4,9 +4,12 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const Pokemon = require('./models/pokemon')
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
 
 // Request Logger
-const morgan = require('morgan')
+const morgan = require('morgan');
+const pokemon = require('./models/pokemon');
 app.use(morgan('tiny'));
 
 // Middleware
@@ -28,8 +31,9 @@ app.get('/pokemon/new', (req, res) => {
 
 // Delete Route
 app.delete('/pokemon/:id', (req, res) => {
-    res.send(`You deleted Pokemon # ${req.params.id}`)
-    console.log(`Delete request for Pokemon # ${req.params.id} received!`)
+    pokemon.splice(req.params.id, 1);
+    console.log(`Deteled Pokemon #${req.params.id}`)
+    res.redirect('/pokemon')
 });
 
 // Update Route
@@ -40,14 +44,57 @@ app.put('/pokemon/:id', (req, res) => {
 
 // Create Route
 app.post('/pokemon', (req, res) => {
-    res.send(`You created a new pokemon!`)
-    console.log('New pokemon request received')
+    let pokemonType = [];
+    Object.values(req.body.type).forEach(element => {
+        let type = element.charAt(0).toUpperCase() + element.slice(1);
+        return pokemonType.push(type)
+    });
+
+    let newPokemon = {
+        id:req.body.id,
+        name:req.body.name,
+        img:req.body.img,
+        type:pokemonType,
+        stats:{
+            hp:req.body.hp,
+            attack:req.body.attack,
+            defense:req.body.defense
+        },
+        damages:{
+            normal: req.body.normal,
+            fire: req.body.fire,
+            water: req.body.water,
+            electric: req.body.electric,
+            grass: req.body.grass,
+            ice: req.body.ice,
+            fight: req.body.fight,
+            poison: req.body.poison,
+            ground: req.body.ground,
+            flying: req.body.flying,
+            psychic: req.body.psychic,
+            bug: req.body.bug,
+            rock: req.body.rock,
+            ghost: req.body.ghost,
+            dragon: req.body.dragon,
+            dark: req.body.dark,
+            steel: req.body.steel,
+        },
+        misc:{
+            abilities: {
+                normal:
+                    req.body.abilities.split(/,| /),
+            }
+        }
+    }
+    Pokemon.push(newPokemon)
+    res.redirect('/pokemon')
 });
 
 // Edit Route
 app.get('/pokemon/:id/edit', (req, res) => {
-    res.send(`You've reached the page to edit Pokemon # ${req.params.id}`)
-    console.log('Edit Route Success')
+    res.render('edit.ejs', {
+        singlePokemon: Pokemon[req.params.id]
+    })
 });
 
 // Show Route

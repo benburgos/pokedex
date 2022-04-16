@@ -9,12 +9,16 @@
 <body>
     <h1>Pokemon List</h1> 
     <ul>
+        <li><a href="/pokemon/new">Create a new Pokédex entry</a></li>
         <% for( let index = 0; index < allPokemon.length; index++ ) { %>
         <li>
-            <a href="/pokemon/<%= index %> ">
+            <a href="/pokemon/<%= index %>">
                 <img src="<%= allPokemon[index].img %>" alt="Picture of <%= allPokemon[index].name %>" width="20px" height="20px">
                 <%= allPokemon[index].name %>
             </a>
+            <form action="/pokemon/<%= index %>?_method=DELETE" method="POST">
+                <input type="submit" value="DELETE">
+            </form>
         </li>
         <% } %>
     </ul>
