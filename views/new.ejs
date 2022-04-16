@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Pokédex Entry</title>
+</head>
+<body>
+    <h1>New Pokédex Entry</h1>
+    <form action="">
+        Enter Pokémon Name: <input type="text" name="name" value=""> <br>
+        Enter Pokémon ID#: 
+        <input type="number" name="id" value="<%= totalNumber + 1 %>" min="<%= totalNumber + 1 %>"> <br>
+        Enter URL For Image: <input type="url" name="img"> <br>
+        Pokémon Type 
+        <br>
+        <% for( let index in weaknessList) { %>
+            <% function capitalize(str) { %>
+                <% return str.charAt(0).toUpperCase() + str.slice(1); %>
+            <% } %> 
+            <%= capitalize(index) %><input type="checkbox" name="<%= index %>" value="2"><br>
+        <% } %>
+        
+        <br>
+
+        Weaknesses:
+        <br>
+        <% for( let index in weaknessList) { %>
+            <% function capitalize(str) { %>
+                <% return str.charAt(0).toUpperCase() + str.slice(1); %>
+            <% } %> 
+            <%= capitalize(index) %><input type="checkbox" name="<%= index %>" value="2"><br>
+        <% } %>
+
+        Abilities:
+        <br>
+        <textarea name="normal" id="" cols="30" rows="10"></textarea>
+    </form>
+
+</body>
+</html>
