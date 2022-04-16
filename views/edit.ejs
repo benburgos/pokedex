@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Pokémon Details</title>
+</head>
+<body>
+    <h1>New Pokédex Entry</h1>
+    <form action="/pokemon/<%= index %>?_method=PUT" method="post">
+        Enter Pokémon Name: <input type="text" name="name" value="<%= singlePokemon.name %>"> <br>
+        Enter Pokémon ID#: 
+        <input type="number" name="id" value="<%= singlePokemon.id %>"> <br>
+        Current Image:
+
+        <br>
+
+        <img src="<%= singlePokemon.img %>" alt="An image of a <% singlePokemon.name %>">
+
+        <br>
+
+        Enter a new URL For Image: <input type="url" name="img"> <br>
+
+        <br>
+
+        Pokémon Type 
+        <br>
+        <% let pokemonType = []; %>
+        <% Object.values(singlePokemon.type).forEach(element => { %>
+        <%    let type = element.charAt(0).toLowerCase() + element.slice(1); %>
+        <%   return pokemonType.push(type) %>
+        <% }); %>
+
+        <% for( let damage in singlePokemon.damages ) { %>
+            <td><%= damage %><input type="checkbox" name="type" value="<%= damage %>"></td>
+            <% if (pokemonType.includes(damage)) { %>
+                <%= damage %><input type="checkbox" name="type" value="<%= damage %>" checked></td>
+            <% } %>
+        <% } %>
+        <br>
+
+        Weaknesses:
+        <br>
+        <% for( let damage in singlePokemon.damages ) { %>
+            <% if (singlePokemon.damages[damage] === '2') { %>
+                <td><%= damage %><input type="checkbox" name="type" value="<%= damage %>" checked></td>  
+            <% } else { %>
+                <td><%= damage %><input type="checkbox" name="type" value="<%= damage %>"></td>
+            <% } %> 
+        <% } %>
+
+        <br>
+
+        <table>
+            <tr>
+                <th>HP</th>
+                <th>Attack</th>
+                <th>Defense</th>
+            </tr>
+            <tr>
+                <td><input type="text" name="hp" value="<%= singlePokemon.stats.hp %>"></td>
+                <td><input type="text" name="attack" value="<%= singlePokemon.stats.attack %>"></td>
+                <td><input type="text" name="defense" value="<%= singlePokemon.stats.defense %>"></td>
+            </tr>
+        </table>
+
+        <br>
+
+        Abilities:
+        <br>
+        <textarea name="abilities" cols="30" rows="10"><%= singlePokemon.misc.abilities.normal %></textarea>
+        
+        <br>
+
+        <input type="submit" value="Submit Changes">
+    </form>
+
+</body>
+</html>
