@@ -1,37 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokédex</title>
-    <style>
-        body {
-            display: block;
-            text-align: center;
-            margin: 10%;
-        }
-        ul {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-        li {
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-            margin: 1%;
-        }
-        a {
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-        }
-    </style>
+    <%- include("partials/head.ejs") %>
 </head>
 <body>
-    <h1>Pokemon List</h1> 
-    <a href="/pokemon/new">Create a new Pokédex entry</a>
+    <header>
+    <h1>Pokédex</h1> 
+    <button><a href="/pokemon/new">Create a new Pokédex entry</a></button>
+    </header>
+    
     <div class="full-list">
         <ul>
             <% for( let index = 0; index < allPokemon.length; index++ ) { %>
@@ -40,9 +17,11 @@
                         <img src="<%= allPokemon[index].img %>" alt="Picture of <%= allPokemon[index].name %>" width="20px" height="20px">
                         <%= allPokemon[index].name %>
                     </a>
+
                     <form action="/pokemon/<%= index %>/edit" method="GET">
                         <input type="submit" value="Edit">
                     </form>
+                    
                     <form action="/pokemon/<%= index %>?_method=DELETE" method="POST">
                         <input type="submit" value="Delete">
                     </form>

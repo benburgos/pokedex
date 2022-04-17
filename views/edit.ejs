@@ -4,77 +4,86 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Pokémon Details</title>
+    <title>Edit Pokédex Entry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <h1>New Pokédex Entry</h1>
     <form action="/pokemon/<%= index %>?_method=PUT" method="post">
-        Enter Pokémon Name: <input type="text" name="name" value="<%= singlePokemon.name %>"> <br>
-        Enter Pokémon ID#: 
-        <input type="number" name="id" value="<%= singlePokemon.id %>"> <br>
-        Current Image:
+    <header>
+        <h1>Edit Pokédex Entry</h1>
+    </header>
+    <div class="pokemon-new-details">
+        <div class="pokemon-basics">
+            <div class="pokemon-basics-entry">
+                Current Image:
+                <img src="<%= singlePokemon.img %>" alt="An image of a <% singlePokemon.name %>"> <br>
+                Enter Pokémon Name: <input type="text" name="name" value="<%= singlePokemon.name %>"> <br>
+                Enter Pokémon ID#: 
+                <input type="number" name="id" value="<%= singlePokemon.id %>"> <br>
+                Enter a new URL For Image: <input type="url" name="img"> <br>
+            </div>
+            <div class="pokemon-stats-entry">
+                <h2>Enter Stat Details:</h2>
+                    HP: <input type="text" name="hp" value="<%= singlePokemon.stats.hp %>">
+                    Attack: <input type="text" name="attack" value="<%= singlePokemon.stats.attack %>">
+                    Defense: <input type="text" name="defense" value="<%= singlePokemon.stats.defense %>">
+            </div>
+        </div>
+        <div class="pokemon-checks">
+            <div class="pokemon-type-entry">
+                <h2>Select Pokemon Type:</h2>
+                    <div class="pokemon-type-table">
+                        <% let pokemonType = []; %>
+                        <% Object.values(singlePokemon.type).forEach(element => { %>
+                        <%    let type = element.charAt(0).toLowerCase() + element.slice(1); %>
+                        <%   return pokemonType.push(type) %>
+                        <% }); %>
+                        <% for( let damage in singlePokemon.damages ) { %>
+                            <div class="pokemon-type-entry-detail">
+                            <% if (pokemonType.includes(damage)) { %>
+                                <button class="<%= damage %>" disabled="disabled"><%= damage %></button>
+                                <input type="checkbox" name="type" value="<%= damage %>" checked>
+                            <% } else { %>
+                                <button class="<%= damage %>" disabled="disabled"><%= damage %></button>
+                                <input type="checkbox" name="type" value="<%= damage %>">
+                            <% } %>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
 
-        <br>
-
-        <img src="<%= singlePokemon.img %>" alt="An image of a <% singlePokemon.name %>">
-
-        <br>
-
-        Enter a new URL For Image: <input type="url" name="img"> <br>
-
-        <br>
-
-        Pokémon Type 
-        <br>
-        <% let pokemonType = []; %>
-        <% Object.values(singlePokemon.type).forEach(element => { %>
-        <%    let type = element.charAt(0).toLowerCase() + element.slice(1); %>
-        <%   return pokemonType.push(type) %>
-        <% }); %>
-
-        <% for( let damage in singlePokemon.damages ) { %>
-            <td><%= damage %><input type="checkbox" name="type" value="<%= damage %>"></td>
-            <% if (pokemonType.includes(damage)) { %>
-                <%= damage %><input type="checkbox" name="type" value="<%= damage %>" checked></td>
-            <% } %>
-        <% } %>
-        <br>
-
-        Weaknesses:
-        <br>
-        <% for( let damage in singlePokemon.damages ) { %>
-            <% if (singlePokemon.damages[damage] === '2') { %>
-                <td><%= damage %><input type="checkbox" name="type" value="<%= damage %>" checked></td>  
-            <% } else { %>
-                <td><%= damage %><input type="checkbox" name="type" value="<%= damage %>"></td>
-            <% } %> 
-        <% } %>
-
-        <br>
-
-        <table>
-            <tr>
-                <th>HP</th>
-                <th>Attack</th>
-                <th>Defense</th>
-            </tr>
-            <tr>
-                <td><input type="text" name="hp" value="<%= singlePokemon.stats.hp %>"></td>
-                <td><input type="text" name="attack" value="<%= singlePokemon.stats.attack %>"></td>
-                <td><input type="text" name="defense" value="<%= singlePokemon.stats.defense %>"></td>
-            </tr>
-        </table>
-
-        <br>
-
-        Abilities:
-        <br>
-        <textarea name="abilities" cols="30" rows="10"><%= singlePokemon.misc.abilities.normal %></textarea>
-        
-        <br>
-
+            <div class="pokemon-weakness-entry">
+                <h2>Select Pokemon Weakness:</h2>
+                    <div class="pokemon-weakness-table">
+                        <% for( let damage in singlePokemon.damages ) { %>
+                            <div class="pokemon-weakness-entry-detail">
+                            <% if (singlePokemon.damages[damage] === '2') { %>
+                                <button class="<%= damage %>" disabled="disabled"><%= damage %></button>
+                                <input type="checkbox" name="type" value="<%= damage %>" checked>  
+                            <% } else { %>
+                                <button class="<%= damage %>" disabled="disabled"><%= damage %></button>
+                                <input type="checkbox" name="type" value="<%= damage %>">
+                            <% } %> 
+                        </div>
+                    <% } %>
+                    </div>
+                </div>
+        </div>
+        <div class="pokemon-abilities-entry">
+            <h2>Enter Pokemon Abilities:</h2>
+                <textarea name="abilities" cols="30" rows="10">
+                    <% Object.values(singlePokemon.misc.abilities.normal).forEach(element => { %>
+                        <%= element %>
+                        <% }) %>
+                </textarea>
+        </div>
+    </div>
+    <div class="submit-button">
         <input type="submit" value="Submit Changes">
+    </div>
     </form>
-
 </body>
 </html>

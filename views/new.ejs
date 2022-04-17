@@ -5,58 +5,81 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Pokédex Entry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <h1>New Pokédex Entry</h1>
     <form action="/pokemon" method="post">
-        Enter Pokémon Name: <input type="text" name="name" value=""> <br>
-        Enter Pokémon ID#: 
-        <input type="number" name="id" value="<%= totalNumber + 1 %>" min="<%= totalNumber + 1 %>"> <br>
-        Enter URL For Image: <input type="url" name="img"> <br>
-        Pokémon Type 
-        <br>
-        <% for( let index in weaknessList) { %>
-            <% function capitalize(str) { %>
-                <% return str.charAt(0).toUpperCase() + str.slice(1); %>
-            <% } %> 
-            <%= capitalize(index) %><input type="checkbox" name="type" value="<%= index %>"><br>
-        <% } %>
-        
-        <br>
 
-        Weaknesses:
-        <br>
-        <% for( let index in weaknessList) { %>
-            <% function capitalize(str) { %>
-                <% return str.charAt(0).toUpperCase() + str.slice(1); %>
-            <% } %> 
-            <%= capitalize(index) %><input type="checkbox" name="<%= index %>" value="2"><br>
-        <% } %>
+    <header>
+    <h1>New Pokédex Entry</h1>
+    </header>
 
-        <br>
+    <div class="pokemon-new-details">
 
-        <table>
-            <tr>
-                <th>HP</th>
-                <th>Attack</th>
-                <th>Defense</th>
-            </tr>
-            <tr>
-                <td><input type="text" name="hp"></td>
-                <td><input type="text" name="attack"></td>
-                <td><input type="text" name="defense"></td>
-            </tr>
-        </table>
+        <div class="pokemon-basics">
 
-        <br>
+            <div class="pokemon-basics-entry">
+                <h2>Enter Basic Details:</h2>
+                
+                Enter Pokémon Name: <input type="text" name="name" value=""> <br>
+                Enter Pokémon ID#: 
+                <input type="number" name="id" value="<%= totalNumber + 1 %>" min="<%= totalNumber + 1 %>"> <br>
+                Enter URL For Image: <input type="url" name="img"> <br>
+                <br>
+            </div>
 
-        Abilities:
-        <br>
-        <textarea name="abilities" id="" cols="30" rows="10"></textarea>
-        
-        <br>
+            <div class="pokemon-stats-entry">
+                <h2>Enter Stat Details:</h2>
+                    HP: <input type="text" name="hp">
+                    Attack: <input type="text" name="attack">
+                    Defense: <input type="text" name="defense">
+            </div>
 
+        </div>
+
+        <div class="pokemon-checks">
+            <div class="pokemon-type-entry">
+                <h2>Select Pokemon Type:</h2>
+                <div class="pokemon-type-table">
+                <% for( let index in weaknessList) { %>
+                    <% function capitalize(str) { %>
+                        <% return str.charAt(0).toUpperCase() + str.slice(1); %>
+                    <% } %>
+                    <div class="pokemon-type-entry-detail">
+                    <button class="<%= index %>" disabled="disabled"><%= capitalize(index) %></button>
+                    <input type="checkbox" name="type" value="<%= index %>">
+                    </div>
+                <% } %>
+                </div>
+            </div>
+
+            <div class="pokemon-weakness-entry">
+                <h2>Select Pokemon Weakness:</h2>
+                <div class="pokemon-weakness-table">
+                <% for( let index in weaknessList) { %>
+                    <% function capitalize(str) { %>
+                        <% return str.charAt(0).toUpperCase() + str.slice(1); %>
+                    <% } %> 
+                    <div class="pokemon-weakness-entry-detail">
+                    <button class="<%= index %>" disabled="disabled"><%= capitalize(index) %></button>
+                    <input type="checkbox" name="<%= index %>" value="2">
+                    </div>
+                <% } %>
+                </div>
+            </div>
+
+        </div>
+        <div class="pokemon-abilities-entry">
+            <h2>Enter Pokemon Abilities:</h2>
+            <textarea name="abilities" id="" cols="30" rows="10"></textarea>
+        </div>
+    </div>
+    <div class="submit-button">
         <input type="submit" value="Create New Pokédex Entry">
+    </div>
     </form>
 
 </body>

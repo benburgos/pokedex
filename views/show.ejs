@@ -5,63 +5,54 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <h1><%= singlePokemon.name %></h1>
-    <h2><%= singlePokemon.id %> </h2>
+    <header>
+        <h1><%= singlePokemon.name %> </h1>
+        <h2><%= singlePokemon.id %></h2>
+    </header>
 
-    <img src="<%= singlePokemon.img %>" alt="Image of <%= singlePokemon.name %>">
+    <div class="image-container">
+        <img class="pokemon-image" src="<%= singlePokemon.img %>" alt="Image of <%= singlePokemon.name %>">
+    </div>
 
-    <br>
+    <div class="pokemon-details">
 
-    <table>
-        <tr>Type:</tr>
-        <tr>
-            <% Object.values(singlePokemon.type).forEach(element => { %>
-            <td><button disabled="disabled"><%= element %></button></td>
-            <% }) %>
-        </tr>
-    </table>
+        <div class="pokemon-types-all">
+            <div class="pokemon-types">
+                Type:
+                    <% Object.values(singlePokemon.type).forEach(element => { %>
+                        <button class="<%= element %>" disabled="disabled"><%= element %></button>
+                        <% }) %>
+            </div>
+            <div class="pokemon-weaknesses">
+                Weaknesses:
+                    <% for( let damage in singlePokemon.damages ) { %>
+                        <% if (singlePokemon.damages[damage] === '2') { %>
+                            <button class="<%= damage %> " disabled="disabled"><%= damage.toUpperCase() %></button>
+                        <% } %>
+                    <% } %>
+            </div>
+        </div>
 
-    <br>
-
-    <table>
-        <tr>Weaknesses</tr>
-        <tr>
-            <% for( let damage in singlePokemon.damages ) { %>
-
-                <% if (singlePokemon.damages[damage] === '2') { %>
-                    <td><button disabled="disabled"><%= damage.toUpperCase() %></button></td>  
-                <% } %>
-            <% } %>
-        </tr>
-    </table>
-
-    <br>
-
-    <table>
-        <tr>
-            <th>HP</th>
-            <th>Attack</th>
-            <th>Defense</th>
-        </tr>
-        <tr>
-            <td><%= singlePokemon.stats.hp  %> </td>
-            <td><%= singlePokemon.stats.attack %> </td>
-            <td><%= singlePokemon.stats.defense %> </td>
-        </tr>
-    </table>
-
-    <table>
-        <tr>
-            <th>Abilities</th>
-        </tr>
-        <tr>
-            <% Object.values(singlePokemon.misc.abilities.normal).forEach(element => { %>
-                <td><button disabled="disabled"><%= element.toUpperCase() %></button></td>
-                <% }) %>
-        </tr>
-    </table>
-
+        <div class="pokemon-stats-all">
+            <div class="pokemon-stats">
+                HP:<%= singlePokemon.stats.hp  %> <br>
+                Attack:<%= singlePokemon.stats.attack %> <br>
+                Defense:<%= singlePokemon.stats.defense %> <br>
+            </div>
+            <div class="pokemon-abilities">
+                Abilities:
+                <% Object.values(singlePokemon.misc.abilities.normal).forEach(element => { %>
+                    <td><button><%= element.toUpperCase() %></button></td>
+                    <% }) %>
+            </div>
+        </div>
+        
+    </div>
 </body>
 </html>

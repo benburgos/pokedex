@@ -14,6 +14,7 @@ app.use(morgan('tiny'));
 
 // Middleware
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static("public"));
 
 //// INDUCES
 // Index Route
@@ -27,60 +28,6 @@ app.get('/pokemon/new', (req, res) => {
         totalNumber: Pokemon.length,
         weaknessList: Pokemon[0].damages
     })
-});
-
-// Delete Route
-app.delete('/pokemon/:id', (req, res) => {
-    pokemon.splice(req.params.id, 1);
-    console.log(`Deteled Pokemon #${req.params.id}`)
-    res.redirect('/pokemon')
-});
-
-// Update Route
-app.put('/pokemon/:id', (req, res) => {
-    let pokemonType = [];
-    Object.values(req.body.type).forEach(element => {
-        let type = element.charAt(0).toUpperCase() + element.slice(1);
-        return pokemonType.push(type)
-    });
-    let editedPokemon = {
-        id:req.body.id,
-        name:req.body.name,
-        img:req.body.img,
-        type:pokemonType,
-        stats:{
-            hp:req.body.hp,
-            attack:req.body.attack,
-            defense:req.body.defense
-        },
-        damages:{
-            normal: req.body.normal,
-            fire: req.body.fire,
-            water: req.body.water,
-            electric: req.body.electric,
-            grass: req.body.grass,
-            ice: req.body.ice,
-            fight: req.body.fight,
-            poison: req.body.poison,
-            ground: req.body.ground,
-            flying: req.body.flying,
-            psychic: req.body.psychic,
-            bug: req.body.bug,
-            rock: req.body.rock,
-            ghost: req.body.ghost,
-            dragon: req.body.dragon,
-            dark: req.body.dark,
-            steel: req.body.steel,
-        },
-        misc:{
-            abilities: {
-                normal:
-                    req.body.abilities.split(/,| /),
-            }
-        }
-    };
-    Pokemon[req.params.id] = editedPokemon;
-    res.redirect('/pokemon')
 });
 
 // Create Route
@@ -130,6 +77,11 @@ app.post('/pokemon', (req, res) => {
     res.redirect('/pokemon')
 });
 
+// Show Route
+app.get('/pokemon/:id', (req, res) => {
+    res.render('show.ejs', { singlePokemon: Pokemon[req.params.id] })
+});
+
 // Edit Route
 app.get('/pokemon/:id/edit', (req, res) => {
     res.render('edit.ejs', {
@@ -140,9 +92,57 @@ app.get('/pokemon/:id/edit', (req, res) => {
     });
 });
 
-// Show Route
-app.get('/pokemon/:id', (req, res) => {
-    res.render('show.ejs', { singlePokemon: Pokemon[req.params.id] })
+// Update Route
+app.put('/pokemon/:id', (req, res) => {
+    let pokemonType = [];
+    Object.values(req.body.type).forEach(element => {
+        let type = element.charAt(0).toUpperCase() + element.slice(1);
+        return pokemonType.push(type)
+    });
+    let editedPokemon = {
+        id:req.body.id,
+        name:req.body.name,
+        img:req.body.img,
+        type:pokemonType,
+        stats:{
+            hp:req.body.hp,
+            attack:req.body.attack,
+            defense:req.body.defense
+        },
+        damages:{
+            normal: req.body.normal,
+            fire: req.body.fire,
+            water: req.body.water,
+            electric: req.body.electric,
+            grass: req.body.grass,
+            ice: req.body.ice,
+            fight: req.body.fight,
+            poison: req.body.poison,
+            ground: req.body.ground,
+            flying: req.body.flying,
+            psychic: req.body.psychic,
+            bug: req.body.bug,
+            rock: req.body.rock,
+            ghost: req.body.ghost,
+            dragon: req.body.dragon,
+            dark: req.body.dark,
+            steel: req.body.steel,
+        },
+        misc:{
+            abilities: {
+                normal:
+                    req.body.abilities.split(/,| /),
+            }
+        }
+    };
+    Pokemon[req.params.id] = editedPokemon;
+    res.redirect('/pokemon')
+});
+
+// Delete Route
+app.delete('/pokemon/:id', (req, res) => {
+    pokemon.splice(req.params.id, 1);
+    res.redirect('/pokemon')
 });
 
 // Listener
