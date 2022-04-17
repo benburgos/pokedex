@@ -16,6 +16,7 @@ header button {
 }
 header a {
     color: #FFFFFF;
+    text-decoration: none;
 }
 input[type="submit"]{
     height: 50px;
@@ -202,7 +203,18 @@ input[type="text"], input[type="number"] {
     background-color: #000000;
     color: #FFFFFF;
 }
-
+.go-back {
+    background-color: #000000;
+}
+.go-back button {
+    height: 50px;
+    background-color: #081174;
+    border-radius: 20%;
+}
+.go-back a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
 
 /*--------------- Color Types ---------------*/
 .normal, .Normal {
